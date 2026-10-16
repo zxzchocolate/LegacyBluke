@@ -38,7 +38,7 @@ jobs:
       - name: Extract Version Name
         id: get_version
         run: |
-          VERSION=$(grep -oE "versionName\s*=\s*\"[^\"]+\"" app/build.gradle.kts | cut -d'"' -f2)
+          VERSION=$(grep -oE "versionName\\s*=\\s*\\"[^\\"]+\\"" app/build.gradle.kts | cut -d'"' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Version extracted: $VERSION"
 
@@ -47,6 +47,14 @@ jobs:
         with:
           name: legacybluke-debug-${{ steps.get_version.outputs.version }}
           path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload USB Host Bridge Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacybluke-usb-host
+          path: usb-host/
           if-no-files-found: error
           retention-days: 14
 
@@ -72,7 +80,7 @@ jobs:
       - name: Extract Version Name
         id: get_version
         run: |
-          VERSION=$(grep -oE "versionName\s*=\s*\"[^\"]+\"" app/build.gradle.kts | cut -d'"' -f2)
+          VERSION=$(grep -oE "versionName\\s*=\\s*\\"[^\\"]+\\"" app/build.gradle.kts | cut -d'"' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Decode Keystore
