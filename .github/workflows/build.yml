@@ -38,7 +38,7 @@ jobs:
       - name: Extract Version Name
         id: get_version
         run: |
-          VERSION=$(grep -oE "versionName\\s*=\\s*\\"[^\\"]+\\"" app/build.gradle.kts | cut -d'"' -f2)
+          VERSION=$(grep -oE 'versionName[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | cut -d'"' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Version extracted: $VERSION"
 
@@ -80,7 +80,7 @@ jobs:
       - name: Extract Version Name
         id: get_version
         run: |
-          VERSION=$(grep -oE "versionName\\s*=\\s*\\"[^\\"]+\\"" app/build.gradle.kts | cut -d'"' -f2)
+          VERSION=$(grep -oE 'versionName[[:space:]]*=[[:space:]]*"[^"]+"' app/build.gradle.kts | cut -d'"' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Decode Keystore
