@@ -42,7 +42,23 @@ class MainActivity : ComponentActivity(), RemoteVolumeKeyHost {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
+        // BluetoothHidDevice and its Callback were introduced in Android 9 (API 28).
+        // Do not initialize BluetoothKeyboardManager on older releases: doing so throws
+        // NoClassDefFoundError before the app can display its normal unsupported state.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            enableEdgeToEdge()
+            setContent {
+                MyApplicationTheme {
+                    androidx.compose.material3.Text(
+                        text = "Bluetooth HID requires Android 9 (API 28) or newer. " +
+                            "This device is running Android API ${Build.VERSION.SDK_INT}."
+                    )
+                }
+            }
+            return
+        }
+
         val sharedPrefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         migrateSoundPreferences(sharedPrefs)
         migrateKeyboardCustomizationPreferences(sharedPrefs)
