@@ -1,6 +1,7 @@
 name: Build Android App
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -44,8 +45,10 @@ jobs:
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bluke-debug-${{ steps.get_version.outputs.version }}
+          name: legacybluke-debug-${{ steps.get_version.outputs.version }}
           path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
 
   release:
     name: Build & Publish Release
