@@ -1,91 +1,94 @@
-<div align="center">
+# LegacyBluke
 
-<img src="Logo.svg" width="128" height="128" alt="Bluke Logo" />
+**A legacy-focused fork of Bluke for Android devices.**
 
-# Bluke
+LegacyBluke is a modified version of [Bluke](https://github.com/arnav-kr/Bluke), focused on adapting its codebase for older Android devices by removing dependencies on Android's `BluetoothHidDevice` API.
 
-Bluke turns your Android phone into a Bluetooth keyboard, touchpad, gamepad, and multimedia remote without needing any host companion software.
+The goal is to make the project more compatible with legacy Android versions and explore alternative approaches to Bluetooth input functionality.
 
-[![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com)
-[![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org)
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg?style=for-the-badge)](LICENSE)
-[![Latest Release](https://img.shields.io/github/v/release/arnav-kr/Bluke?style=for-the-badge&color=orange)](https://github.com/arnav-kr/Bluke/releases)
+## Project Goals
 
-</div>
+- Remove direct dependencies on `BluetoothHidDevice`.
+- Improve compatibility with older Android devices.
+- Preserve useful parts of the original Bluke interface and functionality where possible.
+- Provide a codebase for experimenting with legacy Bluetooth input support.
+- Keep the project open source and easy to build.
 
----
+## Compatibility
 
-## Features
+Compatibility depends on the Android version, device firmware, Bluetooth hardware, and the implementation used by the fork.
 
-- Direct Bluetooth HID connection with no companion apps or server software running on the host
-- Four input modes: Keyboard, Touchpad, Gamepad, and Multimedia remote
-- 12 mechanical switch sound profiles, plus support for importing custom Mechvibes sound packs
-- Multiple typing layouts (QWERTY, AZERTY, QWERTZ, Dvorak, Colemak, Russian ЙЦУКЕН) with `Shift + Space` cycling
-- Multiple keyboard geometries (60%, 65%, 75%) and custom themes with case, plate, and keycap styling
-- Gamepad controller with live switching between Native, Android, and Web mappings
-- Multimedia remote with presentation controls, touchpad, and phone volume button forwarding
-- Built for peak UX with haptic feedback, OLED black mode, and Material You dynamic theming
+Removing `BluetoothHidDevice` does **not** automatically enable Bluetooth keyboard or mouse functionality. A replacement implementation or another supported communication method is needed for those features to work.
 
+Some features from the original Bluke may be unavailable or incomplete in this fork.
 
-[Usage & troubleshooting guide](docs/USAGE.md) · [Changelog](CHANGELOG.md)
+## Building
 
-## Requirements
+### Requirements
 
-- **Android 9 (API level 28) or higher** with firmware supporting the Bluetooth HID Device profile. Profile availability depends on device chipset and OEM ROM.
-- A compatible Bluetooth host (Windows, Linux, Android, ChromeOS). Apple and macOS devices are currently unsupported / future scope.
+- Android Studio
+- A compatible JDK
+- Android SDK components required by the project
+- The included Gradle Wrapper
 
-## Build and Installation
+### Clone the repository
 
-### Prerequisites
+```bash
+git clone https://github.com/zxzchocolate/LegacyBluke.git
+cd LegacyBluke
+```
 
-- Android Studio / JDK compatible with the project's Android Gradle Plugin.
-- Android SDK 36.1, as configured in `app/build.gradle.kts`.
-- The included Gradle Wrapper.
+### Build the debug APK
 
-### Setup and Compilation
+**Linux / macOS**
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/arnav-kr/Bluke.git
-   cd Bluke
-   ```
+```bash
+chmod +x gradlew
+./gradlew assembleDebug
+```
 
-2. **Build with Gradle**:
-   ```bash
-   ./gradlew assembleDebug      # Linux / macOS
-   .\gradlew.bat assembleDebug  # Windows PowerShell
-   ```
+**Windows**
 
-3. **Install on device**:
-   Enable USB Debugging on your Android phone and run:
-   ```bash
-   ./gradlew installDebug
-   ```
+```powershell
+.\gradlew.bat assembleDebug
+```
 
-The debug APK is output to `app/build/outputs/apk/debug/app-debug.apk`.
+The debug APK should be generated at:
 
-## Star History
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
 
-<a href="https://www.star-history.com/?repos=arnav-kr%2FBluke&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=arnav-kr/Bluke&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=arnav-kr/Bluke&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=arnav-kr/Bluke&type=date&legend=top-left" />
- </picture>
-</a>
+### Install on a connected device
+
+Enable USB debugging, connect your Android device, and run:
+
+```bash
+./gradlew installDebug
+```
+
+On Windows, use:
+
+```powershell
+.\gradlew.bat installDebug
+```
+
+## Project Status
+
+LegacyBluke is an experimental fork under active modification. Features, compatibility, and build requirements may differ from the original project as development continues.
+
+## Upstream Project
+
+LegacyBluke is based on [Bluke by arnav-kr](https://github.com/arnav-kr/Bluke).
+
+The original project provides the foundation for the application's interface and input features. This fork modifies that codebase to investigate compatibility with older Android devices.
 
 ## License
 
-This project is licensed under the [AGPL-3.0](LICENSE).
+This project retains the original project's **GNU Affero General Public License v3.0 (AGPL-3.0)**. See the [LICENSE](LICENSE) file for the applicable license terms.
 
 ## Credits
 
-* **[kbsim](https://github.com/tplai/kbsim)**: Part of mechanical switch audio assets are sourced from [kbs.im](https://kbs.im).
+- [Bluke](https://github.com/arnav-kr/Bluke) — original project.
+- [kbsim](https://github.com/tplai/kbsim) — source of some mechanical switch audio assets, as credited by the upstream project.
 
-## Contributors
-
-<a href="https://github.com/arnav-kr/Bluke/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=arnav-kr/Bluke" alt="Bluke Contributors" />
-</a>
-
- See the [full contributor graph](https://github.com/arnav-kr/Bluke/graphs/contributors).
